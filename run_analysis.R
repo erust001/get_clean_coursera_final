@@ -41,5 +41,8 @@ all_data<-cbind(s_data,y_data,x_data)
 colnames(all_data)<-c("subject","activity",feature[col_index,2])
 labels
 all_data<-all_data%>%mutate(activity=labels[activity,2])
+#grouping by subject and activity;and summarising data
+tidy_data<-all_data%>%group_by(activity,subject)%>%summarise(across(-c(1,2),mean))
 #writing txt file
-write.table(all_data,"./tidy_data.txt", row.names = FALSE, quote = FALSE)
+write.table(tidy_data,"./tidy_data.txt", row.names = FALSE, quote = FALSE)
+
